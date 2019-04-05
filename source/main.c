@@ -113,7 +113,7 @@ static bool	setMyGPS(void)
 			}
 		}
 		
-		printf("%s My GPS: %s \n%s", CONSOLE_CYAN, tmpout, CONSOLE_RESET);
+		//printf("%s My GPS: %s \n%s", CONSOLE_CYAN, tmpout, CONSOLE_RESET);
 
 		free(tmpout);
 		tmpout = NULL;
@@ -158,7 +158,7 @@ char *readMyGPS(void)
 	}
 	
 
-	printf("%s My GPS: %s (read from setting)\n%s", CONSOLE_CYAN, buffer, CONSOLE_RESET);
+	printf("%s My GPS: %s \n%s", CONSOLE_CYAN, buffer, CONSOLE_RESET);
 	// free memory
 	// free(buffer);
 	// buffer = NULL;
