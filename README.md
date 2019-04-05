@@ -2,7 +2,8 @@
 
 
 
-This weather homebrew app only get you weather info like Temp or Condition. 
+This weather homebrew app only get you weather info like Temp or Condition.  
+
 you need to set your GPS in the setting by press - button.
 
 Press A or X to get weather info.  
