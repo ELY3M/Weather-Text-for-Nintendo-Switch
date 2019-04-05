@@ -3,7 +3,6 @@
 
 Weather Text by ELY M.  
 
-Credit to 
 
 
 */
