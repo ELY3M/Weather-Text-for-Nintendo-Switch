@@ -298,13 +298,13 @@ char *readWeather(void)
 	// if tmpfile is empty, return true and pop the keyboard.
 	stat("sdmc:/switch/weather.txt", &st);
 	if (st.st_size == 0) {
-		return;
+		return 0;
 	}
 
 	// if calloc fail, pop the keyboard
 	buffer = (char *)calloc(sizeof(char), st.st_size);
 	if (buffer == NULL) {
-		return;
+		return 0;
 	}
 
 	
