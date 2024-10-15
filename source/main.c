@@ -282,7 +282,7 @@ void *getjson(char *JsonString) {
 	
 	printf("%s%s%s", CONSOLE_CYAN, string, CONSOLE_RESET);  
 		
-	return;
+	return JsonString;
 }
 
 
