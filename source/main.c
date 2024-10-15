@@ -20,6 +20,7 @@ Weather Text by ELY M.
 #include <time.h>
 
 #include <switch.h>
+#include "download.h"
 #include "jsmn.h"
 
 #define HALF_SCREEN 40
@@ -91,7 +92,26 @@ char	*popKeyboard(char *message, size_t size)
 }
 
 
-
+char * removeSpaces(char *string)
+{
+    // non_space_count to keep the frequency of non space characters
+    int non_space_count = 0;
+ 
+    //Traverse a string and if it is non space character then, place it at index non_space_count
+    for (int i = 0; string[i] != '\0'; i++)
+    {
+        if (string[i] != ' ')
+        {
+            string[non_space_count] = string[i];
+            non_space_count++;//non_space_count incremented
+        }   
+		
+    }
+    
+    //Finally placing final character at the string end
+    string[non_space_count] = '\0';
+    return string;
+}
 
 static bool	setMyGPS(void)
 {
@@ -153,6 +173,10 @@ char *readMyGPS(void)
 		nbytes = fread(buffer, sizeof(char), st.st_size, fp);
 		if (nbytes > 0) {
 			//mygps = buffer;
+			//remove spaces
+			//printf("readMyGPS(): trying to remove spaces\n");
+			buffer = removeSpaces(buffer);
+			strtok(buffer, "\n");
 		}
 		fclose(fp);
 	}
@@ -197,13 +221,13 @@ void *getjson(char *JsonString) {
 	r = jsmn_parse(&p, JsonString, strlen(JsonString), t, sizeof(t)/sizeof(t[0]));
 	if (r < 0) {
 		printf("Failed to parse JSON: %d\n", r);
-		return;
+		return 0;
 	}
 
 	/* Assume the top-level element is an object */
 	if (r < 1 || t[0].type != JSMN_OBJECT) {
 		printf("Object expected\n");
-		return;
+		return 0;
 	}
 
 
@@ -398,11 +422,6 @@ int main(int argc, char **argv)
 
 		}		
 		
-		
-		
-		
-		
-
 
 
 		
