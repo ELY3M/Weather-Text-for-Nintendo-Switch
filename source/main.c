@@ -37,12 +37,6 @@ struct V {
 const char* const months[12] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 const char* const weekDays[7] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
-void userAppInit(void)
-{
-	void *addr = NULL;
-	if (svcSetHeapSize(&addr, 0x4000000) == (Result)-1)
-		fatalSimple(0);
-}
 
 void title(char *str) {
 	var.half = strlen (str) / 2;
@@ -351,9 +345,10 @@ int main(int argc, char **argv)
    	char *lat = NULL;
 	consoleInit(NULL);
 	curlInit();
-	userAppInit();
  
-
+	padConfigureInput(1, HidNpadStyleSet_NpadStandard);
+	PadState pad;
+	padInitializeDefault(&pad);
 	
 	
 	
@@ -387,35 +382,29 @@ int main(int argc, char **argv)
 		title("Weather Text by ELY M.\n");
 		
 		
-		
-		//FILE_TRANSFER_HTTP(mygps); 
-		
-		
 		//Scan all the inputs. This should be done once for each frame
-		hidScanInput();
+        padUpdate(&pad);
+        u64 kDown = padGetButtonsDown(&pad);
 
-		//hidKeysDown returns information about which buttons have been just pressed (and they weren't in the previous frame)
-		u32 kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-
-		if (kDown & KEY_PLUS)  { 
+		if (kDown & HidNpadButton_Plus)  { 
 		//exit to hbmenu
 		break; 
 		}
 		
 		
-		if (kDown & KEY_MINUS)  { 
+		if (kDown & HidNpadButton_Minus)  { 
 		setMyGPS();	
 		}
 
 
-		if (kDown & KEY_A)  { 
+		if (kDown & HidNpadButton_A)  { 
 		FILE_TRANSFER_HTTP(lat, lon); 
 		sleep(1); 
 		readWeather(); 
 		}
 	
 		
-		if (kDown & KEY_X)  { 
+		if (kDown & HidNpadButton_X)  { 
 		FILE_TRANSFER_HTTP(lat, lon); 
 		sleep(1);
 		readWeather(); 
