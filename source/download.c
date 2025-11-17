@@ -169,36 +169,34 @@ void curlExit(void) {
 
 
 bool FILE_TRANSFER_HTTP(char *lat, char *lon) {
+		
 	consoleClear();
-	
-	
+		
 	
 	//https://forecast.weather.gov/MapClick.php?lat=40.6&lon=-111.64&FcstType=json
-	char	*url = "https://forecast.weather.gov/MapClick.php?";
-	char *finalurl = "";  
+	char url[256] = "https://forecast.weather.gov/MapClick.php?";
+	char finalurl[256] = "https://";  
 	
-	snprintf(finalurl, 256, "%slat=%s&lon=%s&FcstType=json", url, lat, lon);
-	
-	
-	
+	snprintf(finalurl, sizeof(finalurl)+1, "%slat=%s&lon=%s&FcstType=json", url, lat, lon);
+
+	//printf ("\nfinalurl: %slat=%s&lon=%s&FcstType=json", url, lat, lon);
+		
 	//char	*filename = NULL;
 
-	
+
 	if (finalurl == (void *) -1) {
 		return (false);
 	} else if (finalurl != NULL) {
 
 
 		downloadFile(finalurl, "weather.txt");
-		
-		
-
-
+			
 		// release memory
 		//free(url); //crash//  
 		
 		
 	}
+
 
 	/*printf ("\nRemote name: %s\n", dnld_params.dnld_remote_fname);*/
 

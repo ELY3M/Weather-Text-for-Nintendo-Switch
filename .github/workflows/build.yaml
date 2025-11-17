@@ -2,8 +2,6 @@ name: Build
 
 on:
   push:
-    branches:
-     - master
   pull_request:
 
 jobs:
@@ -11,7 +9,8 @@ jobs:
     name: Test build
     runs-on: ubuntu-latest
     container:
-      image: 'devkitpro/devkita64'
+      ##image: 'devkitpro/devkita64'
+      image: 'ghcr.io/irneracoonovich/devkita64'
 
     steps:
       - uses: actions/checkout@v2
@@ -25,7 +24,7 @@ jobs:
         run: ls -la
         
       - name: Publish GitHub release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v4
         with:
           tag_name: ${{ github.run_number }}
           prerelease: false

@@ -229,17 +229,17 @@ void *getjson(char *JsonString) {
 	for (i = 1; i < r; i++) {
 		if (jsoneq(JsonString, &t[i], "Temp") == 0) {
 			//printf("Temp: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(temp, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start); 
+			snprintf(temp, sizeof(temp)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start); 
 			i++;
 		} 
 				
 		else if (jsoneq(JsonString, &t[i], "Weather") == 0) {
 			//printf("Weather: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(weather, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
+			snprintf(weather, sizeof(weather)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
 			i++;
 		} else if (jsoneq(JsonString, &t[i], "Weatherimage") == 0) {
 			//printf("Weatherimage: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(weatherimage, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
+			snprintf(weatherimage, sizeof(weatherimage)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
 			i++;
 		} 
 		
@@ -249,13 +249,13 @@ void *getjson(char *JsonString) {
 		
 		else if (jsoneq(JsonString, &t[i], "name") == 0) {
 			//printf("Location: %.*s\n", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);
-			snprintf(location, 256, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);  
+			snprintf(location, sizeof(location)+1, "%.*s", t[i+1].end-t[i+1].start, JsonString + t[i+1].start);  
 			i++;
 		} 
 		
 		
 		
-		snprintf(string, 256, "\n\n\n\nTemp: %s\nWeather: %s\nLocation: %s\n", temp, weather, location); 
+		snprintf(string, sizeof(string)+1, "\n\n\n\nTemp: %s\nWeather: %s\nLocation: %s\n", temp, weather, location); 
 	
 		
 		
@@ -340,9 +340,9 @@ int main(int argc, char **argv)
 {
 	
 	
-	char *mygps = NULL;
-	char *lon = NULL;
-   	char *lat = NULL;
+	char *mygps = "";
+	char *lon = "";
+   	char *lat = "";
 	consoleInit(NULL);
 	curlInit();
  
@@ -398,9 +398,10 @@ int main(int argc, char **argv)
 
 
 		if (kDown & HidNpadButton_A)  { 
+		//printf("\n\nA pressed\n\nlat: %s lon: %s\n\n", lat, lon);
 		FILE_TRANSFER_HTTP(lat, lon); 
-		sleep(1); 
-		readWeather(); 
+		//sleep(1); 
+		//readWeather(); 
 		}
 	
 		
