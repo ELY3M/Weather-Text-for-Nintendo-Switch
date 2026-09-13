@@ -1,34 +1,38 @@
-name: Build
+name: Build Nro
 
 on:
   push:
   pull_request:
+  workflow_dispatch:
+  workflow_call:
+
+permissions: write-all
 
 jobs:
   build:
-    name: Test build
+    name: Build
     runs-on: ubuntu-latest
     container:
       image: 'devkitpro/devkita64'
       ##image: 'ghcr.io/irneracoonovich/devkita64'
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
 
       - name: build
-        run: make -j2
+        run: make -j$(nproc)
 
       - name: test
         run: ls -la
         
       - name: Publish GitHub release
-        uses: softprops/action-gh-release@v4
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.run_number }}
           prerelease: false
           draft: false
           body: ${{ github.event.head_commit.message }}
-          files: Weather-Text-for-Nintendo-Switch.nro, weather-gps.txt
+          files: ${{ github.event.repository.name }}.nro
           name: "Switch Release #${{ github.run_number }}"
