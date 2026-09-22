@@ -31,7 +31,7 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 
 APP_VERSION   := 1.0
-ICON          := icon.jpg
+ICON          := icon.png
 APP_TITLE     := Weather Text
 APP_AUTHOR    := ELY M.
 
